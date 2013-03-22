@@ -1,7 +1,8 @@
-# procedural_grep is a quick thrown-together "traditional procedural style" implementation
+# 'procedural_grep.py' is a quick thrown-together "traditional procedural style" implementation
 # of the simplistic grep of this kata.
-# The idea is being able to compare what the two versions side by side to see what
-# London School code looks like in relation to a more traditional approach.
+#
+# The idea is being able to compare the two versions (oo grep.py and procedural_grep.py) side
+# by side to see what London School code looks like in relation to a more traditional approach.
 
 def grep(substring):
 	pass
