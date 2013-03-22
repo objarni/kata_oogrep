@@ -7,9 +7,9 @@ The purpose of this kata is to try and implement a "London School Grown" (simple
 
 Dependencies
 ------------
-* Python3
-* py.test
-* mockito
+* Python3 (for running grep)
+* mockito (for running tests)
+* py.test (for running tests)
 
 Running grep
 ------------
