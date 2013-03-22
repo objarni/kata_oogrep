@@ -14,7 +14,9 @@ Dependencies
 Running grep
 ------------
     /home/objarni/kata_oogrep/exampledir$ python ../grep.py somestring
+
 ... which is supposed to produce this output:
+
     File1.txt:1: This is a line with somestring in it.
     File1.txt:2: The second line also contains somestring!
     File2.txt:10: Line 10 in File2.txt features a somestring also.
