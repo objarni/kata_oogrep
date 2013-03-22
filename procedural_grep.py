@@ -5,8 +5,19 @@
 # by side to see what London School code looks like in relation to a more traditional approach.
 
 def grep(substring):
-	pass
 
+	def grep_file(file, substring):
+		f = open(file, 'r')
+		for number, content in enumerate(f):
+			if substring in content:
+				msg = file + ":" + str(number + 1) + ":" + content
+				print(msg)
+
+	import os
+	files = os.listdir('.')
+	for file in files:
+		if os.path.isfile(file):
+			grep_file(file, substring)
 
 
 if __name__ == "__main__":
