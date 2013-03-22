@@ -7,11 +7,11 @@ It uses mockito for test doubles (i.e. stubs, fakes, spies or mocks) and py.test
 
 Running oogrep
 --------------
-/home/kata_oogrep$ python oogrep.py somestring
+  /home/kata_oogrep$ python oogrep.py somestring
 
 Running tests
 -------------
-/home/kata_oogrep$ py.test
+  /home/kata_oogrep$ py.test
 
 
 
