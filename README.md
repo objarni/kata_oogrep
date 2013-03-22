@@ -7,7 +7,7 @@ It uses mockito for test doubles (i.e. stubs, fakes, spies or mocks) and py.test
 
 Running oogrep
 --------------
-    /home/kata_oogrep$ python grep.py somestring
+    /home/objarni/kata_oogrep/exampledir$ python ../grep.py somestring
     
     File1.txt:1: This is a line with somestring in it.
     File1.txt:2: The second line also contains somestring!
@@ -15,7 +15,7 @@ Running oogrep
 
 Running tests
 -------------
-    /home/kata_oogrep$ py.test
+    /home/objarni/kata_oogrep$ py.test
 
 
 
