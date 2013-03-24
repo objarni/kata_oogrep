@@ -4,17 +4,16 @@ class HelpDisplayer:
 		print(".. will list all rows containing <substring>")
 		print("looking in all files in the current directory.")
 
-class GrepFileProcessor: pass
-class CurrentDirFileSource: pass
+class CurrentDirFileSearcher: pass
+class MatchPrinter: pass
 
 class Grep:
-	def __init__(self, file_processor=GrepFileProcessor(), file_source=CurrentDirFileSource()):
-		self.file_processor = file_processor
-		self.file_source = file_source
+	def __init__(self, searcher=CurrentDirFileSearcher(), printer=MatchPrinter()):
+		self.searcher = searcher
+		self.printer = printer
 
 	def run(self, substring):
-		for file in self.file_source.find_files():
-			self.file_processor.process_file(file)
+		self.searcher.search_using_substring(substring)
 
 class GrepCommandLineInterpreter:
 	def __init__(self, helpdisplayer=HelpDisplayer(), grep=Grep()):
@@ -26,14 +25,6 @@ class GrepCommandLineInterpreter:
 			self.grep.run(args[0])
 		else:
 			self.helpdisplayer.display_help()
-
-
-	void Run(List<string> args) {
-		if(args.Count == 1)
-			grep.Run(args[0]);
-		else
-			HelpDisplayer.display_help();
-	}
 
 if __name__ == '__main__':
 	import sys

@@ -42,8 +42,6 @@ def test_grep_searches_using_substring():
 	grep.run('substring')
 	verify(searcher).search_using_substring('substring')
 
-def test_grep_tells
-
 if __name__ == '__main__':
 	import pytest
 	pytest.main()
