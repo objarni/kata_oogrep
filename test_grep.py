@@ -45,6 +45,13 @@ def test_grep_uses_printer_in_searcher():
 	grep.search_for('yoyo')
 	verify(searcher).send_hits_to(printer)
 
+# The printer receives hits, which are printed to stdout.
+def test_printer_output():
+	console = mock()
+	printer = Printer(console=console)
+	printer.register_hit('File1.txt', 10, 'abc')
+	verify(console).print('File1.txt:10: abc')
+
 if __name__ == '__main__':
 	import pytest
 	pytest.main()

@@ -5,10 +5,20 @@ class HelpDisplayer:
 		print("looking in all files in the current directory.")
 
 class CurrentDirFileSearcher: pass
-class MatchPrinter: pass
+
+class Console:
+	def print(self, line):
+		print(line)
+
+class Printer:
+	def __init__(self, console=Console()):
+		self.console = console
+
+	def register_hit(self, file, line_number, line_content):
+		self.console.print(file + ":" + str(line_number) + ": " + line_content)
 
 class Grep:
-	def __init__(self, searcher=CurrentDirFileSearcher(), printer=MatchPrinter()):
+	def __init__(self, searcher=CurrentDirFileSearcher(), printer=Printer()):
 		self.searcher = searcher
 		self.printer = printer
 
