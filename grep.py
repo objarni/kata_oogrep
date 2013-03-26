@@ -12,7 +12,8 @@ class Grep:
 		self.searcher = searcher
 		self.printer = printer
 
-	def run(self, substring):
+	def search_for(self, substring):
+		self.searcher.send_hits_to(self.printer)
 		self.searcher.search_using_substring(substring)
 
 class GrepCommandLineInterpreter:
@@ -22,7 +23,7 @@ class GrepCommandLineInterpreter:
 
 	def run(self, args):
 		if len(args)==1:
-			self.grep.run(args[0])
+			self.grep.search_for(args[0])
 		else:
 			self.helpdisplayer.display_help()
 

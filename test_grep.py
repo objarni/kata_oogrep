@@ -2,11 +2,6 @@ from mockito import *
 
 from grep import *
 
-# having more or less than one argument to grep
-# causes usage message to be displayed, and
-# app to quit
-
-
 # GrepCommandLineInterpreter tests
 def test_on_zero_arguments_displays_help():
 	verify_help_displayed_with_arglist([])
@@ -24,7 +19,7 @@ def test_calls_grep_if_one_argument():
 	grep = mock()
 	interpreter = GrepCommandLineInterpreter(grep=grep)
 	interpreter.run(['abc'])
-	verify(grep).run('abc')
+	verify(grep).search_for('abc')
 
 # Grep tests
 # On technical regard, grep.run(substring) searches all files
@@ -35,12 +30,20 @@ def test_calls_grep_if_one_argument():
 # responsible for finding matches, and a Printer,
 # responsible for printing matches nicely to the console.
 
-# - make sure grep uses the Printer in the Searcher
+# make sure the substring is used for searching
 def test_grep_searches_using_substring():
 	searcher = mock()
 	grep = Grep(searcher=searcher)
-	grep.run('substring')
+	grep.search_for('substring')
 	verify(searcher).search_using_substring('substring')
+
+# make sure grep uses the Printer in the Searcher
+def test_grep_uses_printer_in_searcher():
+	searcher = mock()
+	printer = mock()
+	grep = Grep(searcher=searcher, printer=printer)
+	grep.search_for('yoyo')
+	verify(searcher).send_hits_to(printer)
 
 if __name__ == '__main__':
 	import pytest
