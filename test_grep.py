@@ -22,33 +22,11 @@ def test_calls_grep_if_one_argument():
 	verify(grep).search_for('abc')
 
 # Grep tests
-# On technical regard, grep.run(substring) searches all files
-# in current directory for occurances of 'substring'. All hits
-# are reported nicely to stdout.
-# 
-# Implementationwise, Grep collaborates with a Searcher,
-# responsible for finding matches, and a Printer,
-# responsible for printing matches nicely to the console.
-
-# make sure the substring is used for searching
-def test_grep_searches_using_substring():
-	searcher = mock()
-	grep = Grep(searcher=searcher)
-	grep.search_for('substring')
-	verify(searcher).search_using_substring('substring')
-
-# make sure grep uses the Printer in the Searcher
-def test_grep_uses_printer_in_searcher():
-	searcher = mock()
-	printer = mock()
-	grep = Grep(searcher=searcher, printer=printer)
-	grep.search_for('yoyo')
-	verify(searcher).send_hits_to(printer)
 
 # The printer receives hits, which are printed to stdout.
 def test_printer_output():
 	console = mock()
-	printer = Printer(console=console)
+	printer = MatchPrinter(console=console)
 	printer.register_hit('File1.txt', 10, 'abc')
 	verify(console).print('File1.txt:10: abc')
 

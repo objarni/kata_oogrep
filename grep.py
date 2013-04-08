@@ -4,13 +4,7 @@ class HelpDisplayer:
 		print(".. will list all rows containing <substring>")
 		print("looking in all files in the current directory.")
 
-class CurrentDirFileSearcher: pass
-
-class Console:
-	def print(self, line):
-		print(line)
-
-class Printer:
+class MatchPrinter:
 	def __init__(self, console=Console()):
 		self.console = console
 
@@ -18,13 +12,7 @@ class Printer:
 		self.console.print(file + ":" + str(line_number) + ": " + line_content)
 
 class Grep:
-	def __init__(self, searcher=CurrentDirFileSearcher(), printer=Printer()):
-		self.searcher = searcher
-		self.printer = printer
-
-	def search_for(self, substring):
-		self.searcher.send_hits_to(self.printer)
-		self.searcher.search_using_substring(substring)
+	pass
 
 class GrepCommandLineInterpreter:
 	def __init__(self, helpdisplayer=HelpDisplayer(), grep=Grep()):
