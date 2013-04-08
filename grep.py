@@ -4,6 +4,8 @@ class HelpDisplayer:
 		print(".. will list all rows containing <substring>")
 		print("looking in all files in the current directory.")
 
+class Console: pass
+
 class MatchPrinter:
 	def __init__(self, console=Console()):
 		self.console = console
@@ -11,8 +13,7 @@ class MatchPrinter:
 	def register_hit(self, file, line_number, line_content):
 		self.console.print(file + ":" + str(line_number) + ": " + line_content)
 
-class Grep:
-	pass
+class Grep:	pass
 
 class GrepCommandLineInterpreter:
 	def __init__(self, helpdisplayer=HelpDisplayer(), grep=Grep()):
