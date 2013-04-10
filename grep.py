@@ -13,7 +13,16 @@ class MatchPrinter:
 	def register_hit(self, file, line_number, line_content):
 		self.console.print(file + ":" + str(line_number) + ": " + line_content)
 
-class Grep:	pass
+class FileGrepper: pass
+class FileSearcher: pass
+
+class Grep:
+	def __init__(self, file_grepper=FileGrepper(), file_searcher=FileSearcher()):
+		self.grepper = file_grepper
+		self.searcher = file_searcher
+
+	def search_for(self, substring):
+		self.grepper.grep_for(substring)
 
 class GrepCommandLineInterpreter:
 	def __init__(self, helpdisplayer=HelpDisplayer(), grep=Grep()):

@@ -22,6 +22,16 @@ def test_calls_grep_if_one_argument():
 	verify(grep).search_for('abc')
 
 # Grep tests
+# Grep has one command: search_for(substring).
+# It collaborates with a FileFinder, responsible
+# for finding files in current directory (in simplest
+# case), and a FileGrepper, which does Grep on a single
+# file.
+def test_uses_substring_in_grepper():
+	grepper = mock()
+	grep = Grep(file_grepper=grepper, file_searcher=mock())
+	grep.search_for('abcdef')
+	verify(grepper).grep_for('abcdef')
 
 # The printer receives hits, which are printed to stdout.
 def test_printer_output():
