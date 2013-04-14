@@ -14,15 +14,16 @@ class MatchPrinter:
 		self.console.print(file + ":" + str(line_number) + ": " + line_content)
 
 class FileGrepper: pass
-class FileSearcher: pass
+class FileLister: pass
 
 class Grep:
-	def __init__(self, file_grepper=FileGrepper(), file_searcher=FileSearcher()):
+	def __init__(self, file_grepper=FileGrepper(), file_lister=FileLister()):
 		self.grepper = file_grepper
-		self.searcher = file_searcher
+		self.lister = file_lister
 
 	def search_for(self, substring):
 		self.grepper.grep_for(substring)
+		self.lister.list_files_to(self.grepper)
 
 class GrepCommandLineInterpreter:
 	def __init__(self, helpdisplayer=HelpDisplayer(), grep=Grep()):
