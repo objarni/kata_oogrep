@@ -1,8 +1,8 @@
 from mockito import *
-
 from grep import *
 
-# GrepCommandLineInterpreter tests
+### GrepCommandLineInterpreter ###
+# .. is responsible for interpreting input from command line
 def test_on_zero_arguments_displays_help():
 	verify_help_displayed_with_arglist([])
 
@@ -21,7 +21,8 @@ def test_calls_grep_if_one_argument():
 	interpreter.run(['abc'])
 	verify(grep).search_for('abc')
 
-# Grep tests
+
+### Grep ###
 # Grep has one command: search_for(substring).
 # It collaborates with a FileLister, responsible
 # for listing files in current directory (in simplest
@@ -40,6 +41,9 @@ def test_uses_grepper_as_output_of_file_lister():
 	grep.search_for('abcdef')
 	verify(file_lister).list_files_to(grepper)
 
+### FileLister ###
+# .. is responsible for listing files and sending them
+# forward to another object.
 def test_filelister_sends_all_found_files_to_target():
 	def dirfiles():
 		return ['a', 'b', 'c']
@@ -50,7 +54,8 @@ def test_filelister_sends_all_found_files_to_target():
 	verify(target).receive_file('b')
 	verify(target).receive_file('c')
 
-# The printer receives hits, which are printed to stdout.
+### MatchPrinter ###
+# .. receives hits (grep matches), which are printed to a console.
 def test_printer_output():
 	console = mock()
 	printer = MatchPrinter(console=console)
