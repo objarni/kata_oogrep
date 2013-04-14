@@ -40,6 +40,15 @@ def test_uses_grepper_as_output_of_file_lister():
 	grep.search_for('abcdef')
 	verify(file_lister).list_files_to(grepper)
 
+def test_filelister_sends_all_found_files_to_target():
+	def dirfiles():
+		return ['a', 'b', 'c']
+	file_lister = FileLister(dirfiles=dirfiles)
+	target = mock()
+	file_lister.list_files_to(target)
+	verify(target).receive_file('a')
+	verify(target).receive_file('b')
+	verify(target).receive_file('c')
 
 # The printer receives hits, which are printed to stdout.
 def test_printer_output():

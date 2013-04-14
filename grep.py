@@ -14,7 +14,18 @@ class MatchPrinter:
 		self.console.print(file + ":" + str(line_number) + ": " + line_content)
 
 class FileGrepper: pass
-class FileLister: pass
+
+def dirfiles():
+	import os
+	return os.listdir('.')
+
+class FileLister:
+	def __init__(self, dirfiles=dirfiles):
+		self.dirfiles = dirfiles
+
+	def list_files_to(self, target):
+		for file in self.dirfiles():
+			target.receive_file(file)
 
 class Grep:
 	def __init__(self, file_grepper=FileGrepper(), file_lister=FileLister()):
