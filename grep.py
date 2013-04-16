@@ -4,7 +4,9 @@ class HelpDisplayer:
 		print(".. will list all rows containing <substring>")
 		print("looking in all files in the current directory.")
 
-class Console: pass
+class Console:
+	def print(self, msg):
+		print(msg)
 
 class MatchPrinter:
 	def __init__(self, console=Console()):
