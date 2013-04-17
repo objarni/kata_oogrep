@@ -1,6 +1,7 @@
 from mockito import *
 from grep import *
 
+
 ### GrepCommandLineInterpreter ###
 # .. is responsible for interpreting input from command line
 def test_on_zero_arguments_displays_help():
@@ -41,6 +42,7 @@ def test_uses_grepper_as_output_of_file_lister():
 	grep.search_for('abcdef')
 	verify(file_lister).list_files_to(grepper)
 
+
 ### FileLister ###
 # .. is responsible for listing files and sending them
 # forward to another object.
@@ -53,6 +55,7 @@ def test_filelister_sends_all_found_files_to_target():
 	verify(target).receive_file('a')
 	verify(target).receive_file('b')
 	verify(target).receive_file('c')
+
 
 ### FileGrepper ###
 # .. is responsible for looking for a substring in a file,
@@ -68,6 +71,14 @@ def test_uses_line_grepper_as_target_of_rowreader():
 	file_grepper.receive_file('somefile')
 	verify(row_reader).enumerate_file('somefile', line_grepper)
 
+def test_FileGrepper_tells_line_grepper_what_file_is_being_searched():
+	row_reader = mock()
+	line_grepper = mock()
+	file_grepper = FileGrepper(row_reader=row_reader, line_grepper=line_grepper)
+	file_grepper.receive_file('somefile')
+	verify(line_grepper).looking_in_file('somefile')
+
+
 ### RowReader ###
 # ... is responsible for enumerating the rows of a file
 def test_row_reader_enumerates_correctly():
@@ -82,6 +93,7 @@ def test_row_reader_enumerates_correctly():
 	verify(target).receive_row(2, 'def')
 	verify(target).receive_row(3, 'ghi')
 
+
 ### MatchPrinter ###
 # .. receives hits (grep matches), which are printed to a console.
 def test_printer_output():
@@ -90,6 +102,17 @@ def test_printer_output():
 	printer.register_hit('File1.txt', 10, 'abc')
 	verify(console).print('File1.txt:10: abc')
 
+
+### LineGrepper ###
+# .. which is responsible for finding a substring in a line,
+# and sending it forward if it finds it
+def test_sends_correct_information_on_hit():
+	target = mock()
+	line_grepper = LineGrepper(match_printer=target)
+	line_grepper.grep_for('abc')
+	line_grepper.looking_in_file('somefile')
+	line_grepper.receive_row(3, 'yo abc yo')
+	verify(target).register_hit('somefile', 3, 'yo abc yo')
 
 if __name__ == '__main__':
 	import pytest
