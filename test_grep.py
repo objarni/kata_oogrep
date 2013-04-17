@@ -54,6 +54,27 @@ def test_filelister_sends_all_found_files_to_target():
 	verify(target).receive_file('b')
 	verify(target).receive_file('c')
 
+### FileGrepper ###
+# .. is responsible for looking for a substring in a file,
+# and reporting the result to a match printer.
+# It does this by ordering a RowReader to send all
+# enumerated rows in a file to a LineGrepper.
+# So it's actually only responsible for linking the RowReader
+# and LineGrepper together.
+def test_uses_line_grepper_as_target_of_rowreader():
+	row_reader = mock()
+	line_grepper = mock()
+	file_grepper = FileGrepper(row_reader=row_reader, line_grepper=line_grepper)
+	file_grepper.receive_file('somefile')
+	verify(row_reader).enumerate_rows_to(line_grepper)
+
+def test_row_reader_knows_which_file_to_enumerate():
+	row_reader = mock()
+	line_grepper = mock()
+	file_grepper = FileGrepper(row_reader=row_reader, line_grepper=line_grepper)
+	file_grepper.receive_file('file1')
+	verify(row_reader).read_from_file('file1')
+
 ### MatchPrinter ###
 # .. receives hits (grep matches), which are printed to a console.
 def test_printer_output():
@@ -61,6 +82,7 @@ def test_printer_output():
 	printer = MatchPrinter(console=console)
 	printer.register_hit('File1.txt', 10, 'abc')
 	verify(console).print('File1.txt:10: abc')
+
 
 if __name__ == '__main__':
 	import pytest
