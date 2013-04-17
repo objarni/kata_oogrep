@@ -15,8 +15,19 @@ class MatchPrinter:
 	def register_hit(self, file, line_number, line_content):
 		self.console.print(file + ":" + str(line_number) + ": " + line_content)
 
-class RowReader: pass
+def read_rows(file):
+	for row in open(file):
+		yield row
+
 class LineGrepper: pass
+
+class RowReader:
+	def __init__(self, get_all_rows=read_rows):
+		self.get_all_rows = get_all_rows
+
+	def enumerate_file(self, filename, target):
+		for linenum, content in enumerate(self.get_all_rows(filename)):
+			target.receive_row(linenum+1, content)
 
 class FileGrepper:
 	def __init__(self, row_reader=RowReader(), line_grepper=LineGrepper()):
@@ -24,8 +35,7 @@ class FileGrepper:
 		self.line_grepper = line_grepper
 
 	def receive_file(self, file):
-		self.row_reader.read_from_file(file)
-		self.row_reader.enumerate_rows_to(self.line_grepper)
+		self.row_reader.enumerate_file(file, self.line_grepper)
 
 def dirfiles():
 	import os

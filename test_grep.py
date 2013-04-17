@@ -66,14 +66,21 @@ def test_uses_line_grepper_as_target_of_rowreader():
 	line_grepper = mock()
 	file_grepper = FileGrepper(row_reader=row_reader, line_grepper=line_grepper)
 	file_grepper.receive_file('somefile')
-	verify(row_reader).enumerate_rows_to(line_grepper)
+	verify(row_reader).enumerate_file('somefile', line_grepper)
 
-def test_row_reader_knows_which_file_to_enumerate():
-	row_reader = mock()
-	line_grepper = mock()
-	file_grepper = FileGrepper(row_reader=row_reader, line_grepper=line_grepper)
-	file_grepper.receive_file('file1')
-	verify(row_reader).read_from_file('file1')
+### RowReader ###
+# ... is responsible for enumerating the rows of a file
+def test_row_reader_enumerates_correctly():
+	def get_all_rows(file):
+		yield 'abc'
+		yield 'def'
+		yield 'ghi'
+	target = mock()
+	row_reader = RowReader(get_all_rows=get_all_rows)
+	row_reader.enumerate_file('somefile', target)
+	verify(target).receive_row(1, 'abc')
+	verify(target).receive_row(2, 'def')
+	verify(target).receive_row(3, 'ghi')
 
 ### MatchPrinter ###
 # .. receives hits (grep matches), which are printed to a console.
