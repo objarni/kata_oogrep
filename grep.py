@@ -47,7 +47,7 @@ class RowReader:
 
 	def enumerate_file(self, filename, target):
 		for linenum, content in enumerate(self.get_all_rows(filename)):
-			target.receive_row(linenum+1, content)
+			target.receive_row(linenum + 1, content)
 
 
 class FileGrepper:
@@ -60,12 +60,16 @@ class FileGrepper:
 		self.line_grepper.looking_in_file(file)
 		self.row_reader.enumerate_file(file, self.line_grepper)
 
+	def grep_for(self, substring):
+		self.line_grepper.grep_for(substring)
 
 class FileLister:
 
 	def dirfiles():
 		import os
-		return os.listdir('.')
+		for candidate in os.listdir('.'):
+			if os.path.isfile(candidate):
+				yield candidate
 
 	def __init__(self, dirfiles=dirfiles):
 		self.dirfiles = dirfiles
