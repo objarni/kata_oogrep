@@ -13,7 +13,8 @@ Dependencies
 
 Running grep
 ------------
-    /home/objarni/kata_oogrep/exampledir$ python grep.py somestring
+    /home/objarni/kata_oogrep$ cd exampledir
+    /home/objarni/kata_oogrep/exampledir$ python ../grep.py somestring
 
 .. or, which should produce identical output
 
