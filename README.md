@@ -18,7 +18,7 @@ Running grep
 
 .. or, which should produce identical output
 
-    /home/objarni/kata_oogrep/exampledir$ python procedural_grep.py somestring
+    /home/objarni/kata_oogrep/exampledir$ python ../procedural_grep.py somestring
 
 ... which is supposed to produce this output:
 
